@@ -33,6 +33,14 @@ type Action
   | Sort
 
 
+update action model =
+  case action of
+    NoOp ->
+      model
+
+    Sort ->
+      { model | entries = List.sortBy .points model.entries }
+
 -- VIEW
 
 title message times =
@@ -74,4 +82,7 @@ view model =
 -- WIRE IT ALTOGETHER
 
 main =
-  view initialModel
+  -- view (update Sort initialModel)
+  initialModel
+    |> update Sort
+    |> view
